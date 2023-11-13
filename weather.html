@@ -14,7 +14,7 @@
     </div>
 
     <div class="weather">
-        <img src="images/rain.png" class="weather-icon">
+        <img src="images/rain" class="weather-icon">
         <h1 class="temp">2°C</h1>
         <h2 class="City">Brampton</h2>
         <div class="details">
@@ -37,12 +37,13 @@
 const apiKey = "4212a2adac876dea3479638faa8cd31e";
 const apiUrl = "https://api.openweathermap.org/data/2.5/weather?units=metric&q=brampton";
 
-const searchBox = document.querySelector(".search input")
-const searchBtn = document.querySelector(".search button")
+const searchBox = document.querySelector(".search input");
+const searchBtn = document.querySelector(".search button");
+const weatherIcon= document.querySelector("weather-icon");
 
 
-async function checkWeather(city){
-    const response = await fetch(`${apiUrl} + city  +  &appid=${apiKey}`);
+async function checkWeather(city) {
+    const response = await fetch(`${apiUrl}&q=${city}&appid=${apiKey}`);
     var data = await response.json();
 
     console.log(data);
@@ -52,7 +53,9 @@ async function checkWeather(city){
     document.querySelector(".humidity").innerHTML = data.main.humidity + "%";
     document.querySelector(".col .wind").innerHTML = data.wind.speed + "km/h";
 
-
+    if (data.weather[0].main == "clouds"){
+        weatherIcon.src = "images/clouds.png"
+    }
 }
 
 searchBtn.addEventListener("click", ()=> {
